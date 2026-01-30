@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <style>
+/* ===== GENERAL ===== */
+body {
+    background: linear-gradient(135deg, #eef2f3, #d9e4f5);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 80px; /* space for fixed navbar */
+}
+
+/* ===== NAVBAR ===== */
+.navbar-glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    margin-left: 10px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
+}
+
+/* ===== CARDS CONTAINER ===== */
+.cards-container {
+    margin-top: 40px;
+   
+}
+
+/* ===== FEATURE CARDS ===== */
+.feature-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.feature-card {
+    border-radius: 15px;
+    padding: 25px 20px;
+    text-align: center;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    color: black;
+    font-weight: 500;
+    background-color: #0d6efd;
+}
+
+/* ICON STYLE */
+.feature-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+/* CARD HEADINGS */
+.feature-card h5 {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ===== INDIVIDUAL CARD COLORS & HOVER ===== */
+
+/* Departments */
+.feature-link[href$="department_list"] .feature-card {
+    background: #1abc9c;
+}
+.feature-link[href$="department_list"] .feature-card:hover {
+    background: #16a085;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Doctors */
+.feature-link[href$="doctor_list"] .feature-card {
+    background: #3498db;
+}
+.feature-link[href$="doctor_list"] .feature-card:hover {
+    background: #2980b9;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Patients */
+.feature-link[href$="patient_list"] .feature-card {
+    background: #e67e22;
+}
+.feature-link[href$="patient_list"] .feature-card:hover {
+    background: #d35400;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Patient Records */
+.feature-link[href$="patient_record_list"] .feature-card {
+    background: #9b59b6;
+}
+.feature-link[href$="patient_record_list"] .feature-card:hover {
+    background: #8e44ad;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== QUOTE ===== */
+.patient-quote {
+    margin-top: 60px;
+    text-align: center;
+    font-style: italic;
+    font-size: 20px;
+    color: #444;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .feature-card {
+        margin-bottom: 20px;
+    }
+
+    .patient-quote {
+        font-size: 17px;
+    }
+}
+
+
+  </style>
+<!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-glass fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Hospital System</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navmenu" aria-controls="navmenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navmenu">
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" 
+             href="{% url 'home' %}">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'department' in request.path %}active{% endif %}" 
+             href="{% url 'department_list' %}">Department</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'doctor' in request.path %}active{% endif %}" 
+             href="{% url 'doctor_list' %}">Doctor</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'patient_list' in request.path %}active{% endif %}" 
+             href="{% url 'patient_list' %}">Patient</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'patient_record' in request.path %}active{% endif %}" 
+             href="{% url 'patient_record_list' %}">Patient Record</a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container cards-container">
+  <div class="row g-4">
+
+    <!-- Department Card -->
+   <div class="col-md-3">
+   <a href="{% url 'department_list' %}" class="feature-link">
+    <div class="feature-card">
+      <div class="feature-icon">🏥</div>
+      <h5>Departments</h5>
+      <p>Number Of Records {{ dept_total }}</p>
+    </div>
+  </a>
+</div>
+
+    <!-- Doctors Card -->
+    <div class="col-md-3">
+   <a href="{% url 'doctor_list' %}" class="feature-link">
+    <div class="feature-card">
+      <div class="feature-icon">👨‍⚕️</div>
+      <h5>Doctors</h5>
+      <p>Number Of Records {{ doctor_total }}</p>
+    </div>
+  </a>
+</div>
+
+
+    <!-- Patients Card -->
+    <div class="col-md-3">
+   <a href="{% url 'patient_list' %}" class="feature-link">
+    <div class="feature-card">
+      <div class="feature-icon">🧑‍🦽</div>
+      <h5>Patients</h5>
+      <p>Number Of Records {{ patient_total }}</p>
+    </div>
+  </a>
+</div>
+
+
+    <!-- Patient Records Card -->
+    <div class="col-md-3">
+   <a href="{% url 'patient_record_list' %}" class="feature-link">
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h5>Patient Records</h5>
+      <p>Number Of Records {{ record_total }}</p>
+    </div>
+  </a>
+</div>
+
+
+  </div>
+</div>
+<!-- Page Content -->
+<div class="container">
+    <h2 class="patient-quote">
+        "Do as much as possible for the patient and as little as possible for the patient" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Sigmund Freud
+    </h2>
+   
+</div>
+
+
+</body>
+</html>
